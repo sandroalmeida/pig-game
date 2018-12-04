@@ -11,18 +11,7 @@ GAME RULES:
 
 var scores, roundScore, activePlayer;
 
-scores = [0, 0];
-roundScore = 0;
-activePlayer = 0;
-
-// Hide dice when page is load
-hideTheDice();
-
-// Set initial values to scores
-document.getElementById('score-0').textContent = 0;
-document.getElementById('score-1').textContent = 0;
-document.getElementById('current-0').textContent = 0;
-document.getElementById('current-1').textContent = 0;
+init();
 
 // Create a eventlistener in the roll button
 document.querySelector('.btn-roll').addEventListener('click', function () {
@@ -46,6 +35,7 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
     }    
 });
 
+// Create a eventlistener in the hold button
 document.querySelector('.btn-hold').addEventListener('click', function(){
     
     // Add Global Score
@@ -65,10 +55,12 @@ document.querySelector('.btn-hold').addEventListener('click', function(){
         // Next player
         nextPlayer();    
     }
-    
-    
 });
 
+// Create a eventlistener it the new button
+document.querySelector('.btn-new').addEventListener('click', init);
+
+// Generic function next player
 function nextPlayer(){
     activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
     roundScore = 0;
@@ -82,7 +74,36 @@ function nextPlayer(){
     hideTheDice();
 };
 
+// generic function to hide the dice
 function hideTheDice(){
     document.querySelector('.dice').style.display = 'none';
 };
 
+function init(){
+    
+    // Set the initial player
+    activePlayer = 0;
+    
+    // Reset the player names
+    document.getElementById('name-0').textContent = 'Player 1';
+    document.getElementById('name-1').textContent = 'Player 2';
+
+    hideTheDice();
+
+    // Reset the values to scores
+    scores = [0, 0];
+    roundScore = 0;
+    document.getElementById('score-0').textContent = 0;
+    document.getElementById('score-1').textContent = 0;
+    document.getElementById('current-0').textContent = 0;
+    document.getElementById('current-1').textContent = 0;
+    
+    // Remove class winner, important to the new button
+    document.querySelector('.player-0-panel').classList.add('winner');
+    document.querySelector('.player-1-panel').classList.add('winner');
+    
+    // Reset active class
+    document.querySelector('.player-0-panel').classList.remove('active');
+    document.querySelector('.player-1-panel').classList.remove('active');
+    document.querySelector('.player-0-panel').classList.add('active');
+};
